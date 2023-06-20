@@ -1,0 +1,7 @@
+@Entity
+public class Customer {
+    @Id
+    private Long id;
+    private String name;
+    // ... any other attributes
+}

@@ -1,0 +1,6 @@
+@RestController
+@RequestMapping("/api/reward-points")
+public class RewardPointsController {
+    private final RewardPointsService rewardPointsService;
+    
+}

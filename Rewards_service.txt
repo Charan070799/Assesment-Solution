@@ -1,0 +1,32 @@
+@Service
+public class RewardPointsService {
+    private final TransactionRepository transactionRepository;
+    
+    
+    public RewardPointsService(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
+    
+    public int calculateRewardPoints(Long customerId, YearMonth month) {
+        List<Transaction> transactions = transactionRepository.findByCustomerIdAndMonth(customerId, month);
+        
+        int totalRewardPoints = 0;
+        
+        for (Transaction transaction : transactions) {
+            BigDecimal purchaseAmount = transaction.getPurchaseAmount();
+            int rewardPoints = 0;
+            
+            if (purchaseAmount.compareTo(BigDecimal.valueOf(100)) > 0) {
+                rewardPoints += 2 * (purchaseAmount.subtract(BigDecimal.valueOf(100)).intValue());
+            }
+            
+            if (purchaseAmount.compareTo(BigDecimal.valueOf(50)) > 0) {
+                rewardPoints += (purchaseAmount.subtract(BigDecimal.valueOf(50)).intValue());
+            }
+            
+            totalRewardPoints += rewardPoints;
+        }
+        
+        return totalRewardPoints;
+    }
+}

@@ -1,0 +1,12 @@
+@Entity
+public class Transaction {
+    @Id
+    private Long id;
+    private Long customerId;
+    private BigDecimal purchaseAmount;
+    private LocalDate transactionDate;
+    @ManyToOne
+    @JoinColumn(name = "customerId", referencedColumnName = "id", insertable = false, updatable = false)
+    private Customer customer;
+    
+}
